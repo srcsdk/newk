@@ -1,3 +1,6 @@
 https://news.ycombinator.com/rss
 https://www.schneier.com/blog/atom.xml
 https://blog.torproject.org/feed/
+https://krebsonsecurity.com/feed/
+https://www.eff.org/rss/updates.xml
+https://www.wired.com/feed/category/security/latest/rss
