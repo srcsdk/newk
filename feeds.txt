@@ -4,3 +4,6 @@ https://blog.torproject.org/feed/
 https://krebsonsecurity.com/feed/
 https://www.eff.org/rss/updates.xml
 https://www.wired.com/feed/category/security/latest/rss
+https://feeds.feedburner.com/TheHackersNews
+https://www.darkreading.com/rss.xml
+https://seclists.org/rss/fulldisclosure.rss
