@@ -7,3 +7,5 @@ https://www.wired.com/feed/category/security/latest/rss
 https://feeds.feedburner.com/TheHackersNews
 https://www.darkreading.com/rss.xml
 https://seclists.org/rss/fulldisclosure.rss
+https://cryptome.org/cryptome-rss2.xml
+https://theintercept.com/feed/?lang=en
