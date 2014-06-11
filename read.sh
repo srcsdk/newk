@@ -1,5 +1,8 @@
 #!/bin/bash
 while read url; do
-    echo "--- $url ---"
-    curl -s "$url" | grep -oP '(?<=<title>).*?(?=</title>)'
+    echo ""
+    echo "=== $url ==="
+    echo ""
+    curl -s "$url" | grep -oP '(?<=<title>).*?(?=</title>)' | head -10
+    echo ""
 done < feeds.txt
