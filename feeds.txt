@@ -9,3 +9,5 @@ https://www.darkreading.com/rss.xml
 https://seclists.org/rss/fulldisclosure.rss
 https://cryptome.org/cryptome-rss2.xml
 https://theintercept.com/feed/?lang=en
+https://feeds.arstechnica.com/arstechnica/technology-lab
+https://hackaday.com/feed/
