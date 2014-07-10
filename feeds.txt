@@ -11,3 +11,5 @@ https://cryptome.org/cryptome-rss2.xml
 https://theintercept.com/feed/?lang=en
 https://feeds.arstechnica.com/arstechnica/technology-lab
 https://hackaday.com/feed/
+https://pitchfork.com/rss/reviews/albums/
+https://www.animenewsnetwork.com/all/rss.xml
