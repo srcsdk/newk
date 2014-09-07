@@ -15,3 +15,5 @@ https://pitchfork.com/rss/reviews/albums/
 https://www.animenewsnetwork.com/all/rss.xml
 https://thevinylfactory.com/feed/
 https://daily.bandcamp.com/feed
+https://warontherocks.com/feed/
+https://www.lawfaremedia.org/rss.xml
