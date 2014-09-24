@@ -17,3 +17,6 @@ https://thevinylfactory.com/feed/
 https://daily.bandcamp.com/feed
 https://warontherocks.com/feed/
 https://www.lawfaremedia.org/rss.xml
+https://feeds.feedburner.com/dancarlin/history?format=xml
+https://nsarchive.gwu.edu/feed
+https://thecipherbrief.com/feed
