@@ -20,3 +20,5 @@ https://www.lawfaremedia.org/rss.xml
 https://feeds.feedburner.com/dancarlin/history?format=xml
 https://nsarchive.gwu.edu/feed
 https://thecipherbrief.com/feed
+https://www.historytoday.com/feed/rss.xml
+https://www.smithsonianmag.com/rss/history/
