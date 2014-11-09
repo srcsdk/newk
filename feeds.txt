@@ -22,3 +22,5 @@ https://nsarchive.gwu.edu/feed
 https://thecipherbrief.com/feed
 https://www.historytoday.com/feed/rss.xml
 https://www.smithsonianmag.com/rss/history/
+https://www.aljazeera.com/xml/rss/all.xml
+https://www.foreignaffairs.com/rss.xml
