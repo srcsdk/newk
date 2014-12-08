@@ -24,3 +24,5 @@ https://www.historytoday.com/feed/rss.xml
 https://www.smithsonianmag.com/rss/history/
 https://www.aljazeera.com/xml/rss/all.xml
 https://www.foreignaffairs.com/rss.xml
+https://www.coasttocoastam.com/feed/
+https://www.bellingcat.com/feed/
