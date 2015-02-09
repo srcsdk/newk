@@ -26,3 +26,5 @@ https://www.aljazeera.com/xml/rss/all.xml
 https://www.foreignaffairs.com/rss.xml
 https://www.coasttocoastam.com/feed/
 https://www.bellingcat.com/feed/
+https://philosophynow.org/rss
+https://www.marxists.org/rss/in_defence_of_marxism.xml
