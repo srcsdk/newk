@@ -28,3 +28,5 @@ https://www.coasttocoastam.com/feed/
 https://www.bellingcat.com/feed/
 https://philosophynow.org/rss
 https://www.marxists.org/rss/in_defence_of_marxism.xml
+https://jacobin.com/feed/
+https://www.versobooks.com/blogs/feed
