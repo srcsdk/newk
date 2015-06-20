@@ -32,3 +32,5 @@ https://jacobin.com/feed/
 https://www.versobooks.com/blogs/feed
 https://www.exploit-db.com/rss.xml
 https://threatpost.com/feed/
+https://www.adultswim.com/feed/
+https://boingboing.net/feed
