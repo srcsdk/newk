@@ -34,3 +34,5 @@ https://www.exploit-db.com/rss.xml
 https://threatpost.com/feed/
 https://www.adultswim.com/feed/
 https://boingboing.net/feed
+https://kotaku.com/rss
+https://www.thefirearmblog.com/blog/feed/
