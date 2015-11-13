@@ -27,7 +27,6 @@ https://www.foreignaffairs.com/rss.xml
 https://www.coasttocoastam.com/feed/
 https://www.bellingcat.com/feed/
 https://philosophynow.org/rss
-https://www.marxists.org/rss/in_defence_of_marxism.xml
 https://jacobin.com/feed/
 https://www.versobooks.com/blogs/feed
 https://www.exploit-db.com/rss.xml
@@ -36,3 +35,5 @@ https://www.adultswim.com/feed/
 https://boingboing.net/feed
 https://kotaku.com/rss
 https://www.thefirearmblog.com/blog/feed/
+https://coldwarconversations.com/feed/
+https://www.wilsoncenter.org/rss.xml
