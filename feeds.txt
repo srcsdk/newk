@@ -37,3 +37,5 @@ https://kotaku.com/rss
 https://www.thefirearmblog.com/blog/feed/
 https://coldwarconversations.com/feed/
 https://www.wilsoncenter.org/rss.xml
+https://www.artofmanliness.com/feed/
+https://sectionhiker.com/feed/
