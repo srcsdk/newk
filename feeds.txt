@@ -39,3 +39,5 @@ https://coldwarconversations.com/feed/
 https://www.wilsoncenter.org/rss.xml
 https://www.artofmanliness.com/feed/
 https://sectionhiker.com/feed/
+https://dailystoic.com/feed/
+https://donaldrobertson.name/feed/
