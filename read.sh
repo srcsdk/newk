@@ -4,16 +4,19 @@ if [ ! -f feeds.txt ]; then
     exit 1
 fi
 
+echo "$(date '+%Y-%m-%d %H:%M')"
+echo ""
+
 while read -r url; do
     [ -z "$url" ] && continue
-    echo ""
     echo "[$url]"
-    result=$(curl -s --max-time 10 "$url" 2>/dev/null | grep -oP '(?<=<title>).*?(?=</title>)' | head -10)
+    result=$(curl -s --max-time 10 "$url" 2>/dev/null | grep -oP '(?<=<title>).*?(?=</title>)' | tail -n +2 | head -5)
     if [ -z "$result" ]; then
-        echo "  (no results)"
+        echo "  (unreachable)"
     else
         echo "$result" | while read -r line; do
-            echo "  $line"
+            echo "  - $line"
         done
     fi
+    echo ""
 done < feeds.txt
