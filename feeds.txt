@@ -25,3 +25,6 @@ https://partiallyexaminedlife.com/feed/
 https://www.lrb.co.uk/feeds/rss
 https://packetpushers.net/feed/
 https://blogs.cisco.com/networking/feed
+https://networkingnerd.net/feed/
+https://blog.ipspace.net/feed/
+https://www.cia.gov/resources/csi/rss/
