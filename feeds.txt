@@ -28,3 +28,5 @@ https://blogs.cisco.com/networking/feed
 https://networkingnerd.net/feed/
 https://blog.ipspace.net/feed/
 https://www.cia.gov/resources/csi/rss/
+https://isc.sans.edu/rssfeed.xml
+https://www.philosophybites.com/atom.xml
