@@ -31,4 +31,5 @@ https://www.cia.gov/resources/csi/rss/
 https://isc.sans.edu/rssfeed.xml
 https://www.philosophybites.com/atom.xml
 https://lostintransit.se/feed/
-https://neverworkintheory.org/atom.xml
+https://dchhaddendum.libsyn.com/rss
+https://www.intelligence-history.org/feed/
