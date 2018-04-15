@@ -15,14 +15,11 @@ https://www.lawfaremedia.org/rss.xml
 https://feeds.feedburner.com/dancarlin/history?format=xml
 https://nsarchive.gwu.edu/feed
 https://thecipherbrief.com/feed
-https://www.aljazeera.com/xml/rss/all.xml
 https://www.foreignaffairs.com/rss.xml
 https://www.bellingcat.com/feed/
 https://philosophynow.org/rss
 https://dailystoic.com/feed/
-https://donaldrobertson.name/feed/
 https://partiallyexaminedlife.com/feed/
-https://www.lrb.co.uk/feeds/rss
 https://packetpushers.net/feed/
 https://blogs.cisco.com/networking/feed
 https://networkingnerd.net/feed/
@@ -30,6 +27,4 @@ https://blog.ipspace.net/feed/
 https://www.cia.gov/resources/csi/rss/
 https://isc.sans.edu/rssfeed.xml
 https://www.philosophybites.com/atom.xml
-https://lostintransit.se/feed/
 https://dchhaddendum.libsyn.com/rss
-https://www.intelligence-history.org/feed/
