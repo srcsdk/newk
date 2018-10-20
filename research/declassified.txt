@@ -1,0 +1,44 @@
+index of relevant cia declassified documents
+
+cia reading room: cia.gov/readingroom/
+
+gateway process:
+  CIA-RDP96-00788R001700210016-5
+  analysis and assessment of gateway process (1983)
+
+stargate collection:
+  cia.gov/readingroom/collection/stargate
+  remote viewing program files (1978-1995)
+  includes operational remote viewing sessions
+  coordinate remote viewing (crv) methodology
+
+mkultra:
+  cia.gov/readingroom/collection/mkultra
+  behavioral modification research (1953-1973)
+  sub-project 68: dr. ewen cameron, mcgill university
+  sub-project 119: psychoelectronics
+  financial records and correspondence
+
+cointelpro (fbi, but relevant):
+  vault.fbi.gov/cointel-pro
+  counterintelligence programs (1956-1971)
+  domestic surveillance and disruption operations
+
+operation mockingbird:
+  cia influence on media organizations (1950s-1970s)
+  church committee findings, book 1
+
+operation paperclip:
+  recruitment of german scientists post-ww2 (1945-1959)
+  includes wernher von braun, kurt blome
+  national archives: nara.gov
+
+phoenix program:
+  cia counterinsurgency in vietnam (1965-1972)
+  declassified through vietnam era records
+  estimated 20,000-40,000 neutralized
+
+family jewels:
+  cia.gov/readingroom/collection/family-jewels
+  693 pages of cia violations of charter (1973)
+  assassination plots, domestic surveillance, mail opening
