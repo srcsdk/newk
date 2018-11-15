@@ -23,3 +23,6 @@ https://www.philosophybites.com/atom.xml
 https://feeds.feedburner.com/dancarlin/history?format=xml
 https://dchhaddendum.libsyn.com/rss
 https://www.aljazeera.com/xml/rss/all.xml
+https://consortiumnews.com/feed/
+https://www.moonofalabama.org/feed
+https://www.counterpunch.org/feed/
