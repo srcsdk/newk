@@ -1,0 +1,30 @@
+reading list - compiled 2018
+
+philosophy:
+- marcus aurelius, meditations (gregory hays translation)
+- seneca, letters from a stoic (robin campbell translation)
+- epictetus, discourses and selected writings
+- plato, the republic
+- nietzsche, beyond good and evil
+- camus, the myth of sisyphus
+- dostoevsky, notes from underground
+
+consciousness:
+- itzhak bentov, stalking the wild pendulum
+- david bohm, wholeness and the implicate order
+- robert monroe, journeys out of the body
+- aldous huxley, the doors of perception
+- michael talbot, the holographic universe
+- fritjof capra, the tao of physics
+
+intelligence/covert:
+- tim weiner, legacy of ashes (history of the cia)
+- annie jacobsen, operation paperclip
+- alfred mccoy, a question of torture
+- james bamford, the puzzle palace (nsa)
+- peter dale scott, the american deep state
+
+networking:
+- w. richard stevens, tcp/ip illustrated vol. 1
+- kevin mitnick, the art of intrusion
+- georgia weidman, penetration testing
