@@ -26,3 +26,4 @@ https://www.aljazeera.com/xml/rss/all.xml
 https://consortiumnews.com/feed/
 https://www.moonofalabama.org/feed
 https://www.counterpunch.org/feed/
+https://www.astro.com/blog/en/feed/
