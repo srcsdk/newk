@@ -29,3 +29,5 @@ https://www.counterpunch.org/feed/
 https://www.astro.com/blog/en/feed/
 https://theastrologypodcast.com/feed/
 https://feeds.feedburner.com/RealitySandwich
+https://www.gaia.com/blog/feed
+https://lonerwolf.com/feed/
