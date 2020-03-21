@@ -34,3 +34,9 @@ https://lonerwolf.com/feed/
 https://www.thehermeticpenetrator.com/feed
 https://hermetic.com/rss.xml
 https://ultraculture.org/feed/
+https://realpython.com/atom.xml
+https://automatetheboringstuff.com/blog/feed
+https://planet.python.org/rss20.xml
+https://www.csoonline.com/feed/
+https://feeds.feedburner.com/TheRegister/Security
+https://threatpost.com/feed/
