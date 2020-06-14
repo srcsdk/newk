@@ -40,3 +40,6 @@ https://planet.python.org/rss20.xml
 https://www.csoonline.com/feed/
 https://feeds.feedburner.com/TheRegister/Security
 https://threatpost.com/feed/
+https://blog.talosintelligence.com/feeds/posts/default
+https://www.sentinelone.com/blog/feed/
+https://aws.amazon.com/blogs/security/feed/
