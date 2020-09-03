@@ -43,3 +43,6 @@ https://threatpost.com/feed/
 https://blog.talosintelligence.com/feeds/posts/default
 https://www.sentinelone.com/blog/feed/
 https://aws.amazon.com/blogs/security/feed/
+https://cacm.acm.org/feed/
+https://blog.acolyer.org/feed/
+https://dl.acm.org/action/showFeed?type=etoc&feed=rss&jc=csur
