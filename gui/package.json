@@ -1,0 +1,13 @@
+{
+  "name": "newk-gui",
+  "version": "0.1.0",
+  "description": "web interface for newk feed reader",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js --port 3001"
+  },
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
