@@ -1,0 +1,14 @@
+version: "3.8"
+
+services:
+  newk:
+    build: .
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./feeds.txt:/app/feeds.txt
+      - ./research_feeds.txt:/app/research_feeds.txt
+      - ./categories.json:/app/categories.json
+    restart: unless-stopped
+    environment:
+      - NODE_ENV=production
