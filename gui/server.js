@@ -61,3 +61,40 @@ app.get('/', (req, res) => {
 app.listen(port, () => {
     console.log(`newk server running on http://localhost:${port}`);
 });
+
+const categories_file = path.join(__dirname, '..', 'categories.json');
+
+function load_categories() {
+    if (!fs.existsSync(categories_file)) return {};
+    try {
+        return JSON.parse(fs.readFileSync(categories_file, 'utf8'));
+    } catch (e) {
+        return {};
+    }
+}
+
+app.get('/api/categories', (req, res) => {
+    const cats = load_categories();
+    const summary = {};
+    for (const [name, data] of Object.entries(cats)) {
+        const subcats = data.subcategories || {};
+        let feed_count = 0;
+        for (const urls of Object.values(subcats)) {
+            feed_count += urls.length;
+        }
+        summary[name] = {
+            subcategories: Object.keys(subcats),
+            feed_count: feed_count,
+        };
+    }
+    res.json(summary);
+});
+
+app.get('/api/category/:name', (req, res) => {
+    const cats = load_categories();
+    const cat = cats[req.params.name];
+    if (!cat) {
+        return res.status(404).json({ error: 'category not found' });
+    }
+    res.json(cat);
+});
