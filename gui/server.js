@@ -98,3 +98,5 @@ app.get('/api/category/:name', (req, res) => {
     }
     res.json(cat);
 });
+
+app.use(express.static(path.join(__dirname, 'public')));
