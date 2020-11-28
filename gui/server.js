@@ -100,3 +100,32 @@ app.get('/api/category/:name', (req, res) => {
 });
 
 app.use(express.static(path.join(__dirname, 'public')));
+
+app.get('/api/search', (req, res) => {
+    const query = (req.query.q || '').toLowerCase().trim();
+    if (!query) {
+        return res.status(400).json({ error: 'missing query parameter q' });
+    }
+
+    try {
+        const scraper = path.join(__dirname, '..', 'scrape.py');
+        const output = execSync(
+            `python3 ${scraper} --json --limit 200`,
+            { timeout: 60000, encoding: 'utf8' }
+        );
+        const items = JSON.parse(output);
+        const matches = items.filter(item => {
+            const title = (item.title || '').toLowerCase();
+            const desc = (item.description || '').toLowerCase();
+            const cat = (item.category || '').toLowerCase();
+            return title.includes(query) || desc.includes(query) || cat.includes(query);
+        });
+        res.json({
+            query: query,
+            count: matches.length,
+            items: matches.slice(0, 50),
+        });
+    } catch (err) {
+        res.status(500).json({ error: 'search failed', detail: err.message });
+    }
+});
