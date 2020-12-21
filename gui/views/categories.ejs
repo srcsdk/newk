@@ -1,0 +1,7 @@
+<h2>categories</h2>
+<% Object.keys(categories).forEach(function(name) { %>
+    <div style="margin: 8px 0">
+        <a href="/category/<%= name %>"><%= name %></a>
+        (<%= categories[name].feed_count %> feeds)
+    </div>
+<% }); %>

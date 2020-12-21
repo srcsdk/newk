@@ -1,0 +1,11 @@
+<% items.forEach(function(item) { %>
+    <div class="feed-item">
+        <a href="<%= item.link %>" target="_blank"><%= item.title %></a>
+        <div class="date"><%= (item.date || '').substring(0, 10) %></div>
+        <div class="category"><%= item.category || '' %></div>
+        <% if (item.summary) { %>
+            <div class="summary"><%= item.summary %></div>
+        <% } %>
+    </div>
+<% }); %>
+<p class="date"><%= items.length %> items</p>

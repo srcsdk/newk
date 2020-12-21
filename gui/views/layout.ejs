@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>newk - <%= title %></title>
+    <style>
+        body {
+            background: #1e1e1e;
+            color: #ccc;
+            font-family: monospace;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 { color: #fff; font-size: 18px; }
+        a { color: #4ec9b0; }
+        a:hover { text-decoration: underline; }
+        nav { margin-bottom: 15px; }
+        nav a { margin-right: 15px; color: #888; text-decoration: none; }
+        nav a:hover { color: #4ec9b0; }
+        .feed-item {
+            border-bottom: 1px solid #333;
+            padding: 8px 0;
+        }
+        .date { color: #666; font-size: 12px; }
+        .category { color: #888; font-size: 11px; }
+        .summary { color: #999; font-size: 12px; margin-top: 4px; }
+    </style>
+</head>
+<body>
+    <h1>newk</h1>
+    <nav>
+        <a href="/">home</a>
+        <a href="/categories">categories</a>
+        <a href="/search">search</a>
+    </nav>
+    <%- body %>
+</body>
+</html>
