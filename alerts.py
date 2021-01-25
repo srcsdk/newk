@@ -108,6 +108,67 @@ def check_articles(articles, alerts=None):
     return results
 
 
+SAVED_SEARCHES_FILE = ALERTS_DIR / "saved_searches.json"
+
+
+def _load_saved_searches():
+    """load saved searches from disk"""
+    if not SAVED_SEARCHES_FILE.exists():
+        return []
+    try:
+        with open(SAVED_SEARCHES_FILE) as f:
+            return json.load(f)
+    except (json.JSONDecodeError, OSError):
+        return []
+
+
+def _save_saved_searches(searches):
+    """persist saved searches to disk"""
+    ALERTS_DIR.mkdir(parents=True, exist_ok=True)
+    with open(SAVED_SEARCHES_FILE, "w") as f:
+        json.dump(searches, f, indent=2)
+
+
+def create_saved_search(name, keywords, notify=True):
+    """create a saved search that can match incoming articles.
+
+    name: identifier for the search
+    keywords: list of terms to match against article content
+    notify: whether to flag matches for notification
+    """
+    searches = _load_saved_searches()
+    if isinstance(keywords, str):
+        keywords = [keywords]
+    entry = {
+        "name": name,
+        "keywords": keywords,
+        "notify": notify,
+        "created_at": time.strftime("%Y-%m-%d %H:%M:%S"),
+    }
+    searches.append(entry)
+    _save_saved_searches(searches)
+    return entry
+
+
+def check_saved_searches(article):
+    """check if an article matches any saved searches.
+
+    returns list of matching search names.
+    """
+    searches = _load_saved_searches()
+    title = article.get("title", "").lower()
+    desc = article.get("description", "").lower()
+    content = f"{title} {desc}"
+
+    matches = []
+    for search in searches:
+        keywords = search.get("keywords", [])
+        if any(kw.lower() in content for kw in keywords):
+            matches.append(search["name"])
+
+    return matches
+
+
 def log_alert_match(article, alert_names):
     """log an alert match for history"""
     log = []
