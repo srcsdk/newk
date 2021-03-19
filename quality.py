@@ -90,6 +90,38 @@ def calculate_quality(items):
     }
 
 
+def score_credibility(source_url, history):
+    """score source reliability based on past article quality metrics.
+
+    history is a list of dicts with keys like 'quality', 'has_date',
+    'has_description', 'title_length'. returns a score from 0 to 100.
+    """
+    if not history:
+        return 50  # neutral score for unknown sources
+
+    total = 0
+    for entry in history:
+        points = 0
+        quality = entry.get("quality", 0)
+        points += min(quality, 100) * 0.4
+
+        if entry.get("has_date", False):
+            points += 20
+        if entry.get("has_description", False):
+            points += 20
+
+        title_len = entry.get("title_length", 0)
+        if 10 <= title_len <= 200:
+            points += 20
+        elif title_len > 0:
+            points += 10
+
+        total += points
+
+    score = total / len(history)
+    return min(100, max(0, round(score)))
+
+
 def rank_feeds(feed_groups):
     """rank feeds by quality score.
 
