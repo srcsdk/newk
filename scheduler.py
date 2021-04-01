@@ -85,6 +85,23 @@ def run_scheduler(interval=None):
         save_schedule(schedule)
 
 
+_last_refresh_times = {}
+
+
+def throttle_refresh(feed_url, min_interval=300):
+    """check if a feed can be refreshed based on minimum interval.
+
+    tracks last refresh time per feed url and prevents
+    too-frequent refreshes. returns True if refresh is allowed.
+    """
+    now = time.time()
+    last_time = _last_refresh_times.get(feed_url)
+    if last_time is not None and (now - last_time) < min_interval:
+        return False
+    _last_refresh_times[feed_url] = now
+    return True
+
+
 if __name__ == "__main__":
     interval = None
     if len(sys.argv) > 1:
