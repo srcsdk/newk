@@ -58,6 +58,43 @@ def print_previews(previews):
         print()
 
 
+_article_cache = {}
+
+
+def cache_article(url, content, ttl=3600):
+    """cache article content for offline reading with expiry.
+
+    stores content with a timestamp. returns True if cached,
+    False if url was already cached and not expired.
+    retrieves cached content if called with content=None.
+    """
+    import time
+
+    now = time.time()
+
+    if content is None:
+        # retrieval mode
+        entry = _article_cache.get(url)
+        if entry is None:
+            return None
+        if now - entry["timestamp"] > entry["ttl"]:
+            del _article_cache[url]
+            return None
+        return entry["content"]
+
+    # check if already cached and not expired
+    existing = _article_cache.get(url)
+    if existing and now - existing["timestamp"] <= existing["ttl"]:
+        return False
+
+    _article_cache[url] = {
+        "content": content,
+        "timestamp": now,
+        "ttl": ttl,
+    }
+    return True
+
+
 if __name__ == "__main__":
     try:
         from scrape import scrape_all
