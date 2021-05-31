@@ -83,6 +83,45 @@ def filter_by_tag(items, tag_name, tags=None):
     return result
 
 
+def cluster_by_topic(articles, min_overlap=2):
+    """group articles by shared tags or keywords.
+
+    each article should have a 'tags' key (list of strings).
+    articles sharing at least min_overlap tags are grouped together.
+    returns a list of article groups (lists).
+    """
+    if not articles:
+        return []
+
+    # build tag sets for each article
+    tag_sets = []
+    for article in articles:
+        tags = set(t.lower() for t in article.get("tags", []))
+        tag_sets.append(tags)
+
+    # track which articles have been assigned to a cluster
+    assigned = [False] * len(articles)
+    clusters = []
+
+    for i in range(len(articles)):
+        if assigned[i]:
+            continue
+        cluster = [articles[i]]
+        assigned[i] = True
+
+        for j in range(i + 1, len(articles)):
+            if assigned[j]:
+                continue
+            overlap = tag_sets[i] & tag_sets[j]
+            if len(overlap) >= min_overlap:
+                cluster.append(articles[j])
+                assigned[j] = True
+
+        clusters.append(cluster)
+
+    return clusters
+
+
 if __name__ == "__main__":
     import sys
     if len(sys.argv) < 2:
