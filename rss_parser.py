@@ -92,6 +92,77 @@ def detect_format(raw_bytes):
     return "unknown"
 
 
+def estimate_read_time(text, wpm=200):
+    """estimate reading time in minutes from article text.
+
+    splits text on whitespace and divides by words per minute.
+    returns a float rounded to 1 decimal place, minimum 0.1.
+    """
+    if not text or not text.strip():
+        return 0.0
+    word_count = len(text.split())
+    minutes = word_count / max(wpm, 1)
+    return max(0.1, round(minutes, 1))
+
+
+def parse_atom(xml_text, source_url=""):
+    """parse atom feed format (entry/title/link/updated elements).
+
+    handles the atom namespace and extracts entries with
+    title, link href, updated date, and summary content.
+    """
+    if xml_text is None:
+        return []
+
+    if isinstance(xml_text, str):
+        xml_text = xml_text.encode("utf-8")
+
+    try:
+        root = ET.fromstring(xml_text)
+    except ET.ParseError:
+        return []
+
+    ns = {"atom": "http://www.w3.org/2005/Atom"}
+    items = []
+
+    for entry in root.findall(".//atom:entry", ns):
+        title_el = entry.find("atom:title", ns)
+        link_el = entry.find("atom:link", ns)
+        updated_el = entry.find("atom:updated", ns)
+        summary_el = entry.find("atom:summary", ns)
+        content_el = entry.find("atom:content", ns)
+
+        title = ""
+        if title_el is not None and title_el.text:
+            title = title_el.text.strip()
+
+        link = ""
+        if link_el is not None:
+            link = link_el.get("href", "")
+
+        updated = ""
+        if updated_el is not None and updated_el.text:
+            updated = updated_el.text.strip()
+
+        summary = ""
+        if summary_el is not None and summary_el.text:
+            summary = summary_el.text.strip()
+        elif content_el is not None and content_el.text:
+            summary = content_el.text.strip()
+
+        if title:
+            items.append({
+                "title": title,
+                "link": link,
+                "date": updated[:19],
+                "description": summary[:500],
+                "source": source_url,
+                "format": "atom",
+            })
+
+    return items
+
+
 def parse_auto(raw_bytes, source_url):
     """auto-detect format and parse accordingly"""
     fmt = detect_format(raw_bytes)
@@ -99,4 +170,6 @@ def parse_auto(raw_bytes, source_url):
         return parse_json_feed(raw_bytes, source_url)
     elif fmt == "rss1":
         return parse_rss1(raw_bytes, source_url)
+    elif fmt == "atom":
+        return parse_atom(raw_bytes, source_url)
     return []
