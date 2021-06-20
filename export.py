@@ -96,6 +96,61 @@ def import_opml(filepath):
     return feeds
 
 
+def format_digest(articles, format="text"):
+    """create a daily digest summary from a list of articles.
+
+    format can be 'text' for plain text or 'html' for html output.
+    groups articles by source and includes title, link, and date.
+    """
+    if not articles:
+        return ""
+
+    date_str = time.strftime("%Y-%m-%d")
+
+    if format == "html":
+        lines = [f"<h1>daily digest - {date_str}</h1>"]
+        by_source = {}
+        for article in articles:
+            src = article.get("source", "unknown")
+            if src not in by_source:
+                by_source[src] = []
+            by_source[src].append(article)
+
+        for source, items in sorted(by_source.items()):
+            lines.append(f"<h2>{source}</h2><ul>")
+            for item in items:
+                title = item.get("title", "untitled")
+                link = item.get("link", "")
+                if link:
+                    lines.append(f'<li><a href="{link}">{title}</a></li>')
+                else:
+                    lines.append(f"<li>{title}</li>")
+            lines.append("</ul>")
+        return "\n".join(lines)
+
+    # plain text format
+    lines = [f"daily digest - {date_str}", "=" * 40]
+    by_source = {}
+    for article in articles:
+        src = article.get("source", "unknown")
+        if src not in by_source:
+            by_source[src] = []
+        by_source[src].append(article)
+
+    for source, items in sorted(by_source.items()):
+        lines.append(f"\n[{source}]")
+        for item in items:
+            title = item.get("title", "untitled")
+            link = item.get("link", "")
+            line = f"  - {title}"
+            if link:
+                line += f"\n    {link}"
+            lines.append(line)
+
+    lines.append(f"\n{len(articles)} articles total")
+    return "\n".join(lines)
+
+
 def feeds_from_file(filepath):
     """load feeds from a text file (one url per line)"""
     feeds = []
