@@ -85,6 +85,32 @@ def update_notes(link, notes):
     return False
 
 
+def import_from_browser(bookmarks_file):
+    """parse a bookmarks html file and extract urls.
+
+    handles standard netscape bookmark format exported by
+    most browsers. extracts href and link text from <a> tags.
+    returns a list of dicts with 'title' and 'link' keys.
+    """
+    import re
+
+    try:
+        with open(bookmarks_file, "r", encoding="utf-8") as f:
+            content = f.read()
+    except (OSError, UnicodeDecodeError):
+        return []
+
+    pattern = r'<[Aa]\s+[^>]*[Hh][Rr][Ee][Ff]="([^"]*)"[^>]*>(.*?)</[Aa]>'
+    results = []
+    for match in re.finditer(pattern, content):
+        url = match.group(1).strip()
+        title = match.group(2).strip()
+        if url and url.startswith(("http://", "https://")):
+            results.append({"title": title, "link": url})
+
+    return results
+
+
 def export_bookmarks(filepath, fmt="json"):
     """export bookmarks to file"""
     bookmarks = load_bookmarks()
