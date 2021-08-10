@@ -27,11 +27,9 @@ def detect_feed_type(content):
 
 def find_feed_links(html):
     """extract feed urls from html link tags."""
-    pattern = r'<link[^>]+type=["']application/(rss|atom)\+xml["'][^>]*/>'
-    matches = re.findall(pattern, html, re.IGNORECASE)
     hrefs = re.findall(
-        r'<link[^>]+type=["']application/(?:rss|atom)\+xml["'][^>]*'
-        r'href=["']([^"']+)["']',
+        r"<link[^>]+type=[\"']application/(?:rss|atom)\+xml[\"'][^>]*"
+        r"href=[\"']([^\"']+)[\"']",
         html, re.IGNORECASE
     )
     return hrefs
