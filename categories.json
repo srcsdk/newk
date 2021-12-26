@@ -1,0 +1,142 @@
+{
+  "security": {
+    "description": "cybersecurity, infosec, threat intelligence",
+    "subcategories": {
+      "news": [
+        "https://www.schneier.com/blog/atom.xml",
+        "https://krebsonsecurity.com/feed/",
+        "https://feeds.feedburner.com/TheHackersNews",
+        "https://www.darkreading.com/rss.xml"
+      ],
+      "threat_intel": [
+        "https://isc.sans.edu/rssfeed.xml",
+        "https://blog.talosintelligence.com/feeds/posts/default",
+        "https://www.sentinelone.com/blog/feed/"
+      ],
+      "policy": [
+        "https://www.eff.org/rss/updates.xml",
+        "https://www.csoonline.com/feed/",
+        "https://feeds.feedburner.com/TheRegister/Security"
+      ],
+      "disclosure": [
+        "https://seclists.org/rss/fulldisclosure.rss",
+        "https://aws.amazon.com/blogs/security/feed/"
+      ]
+    }
+  },
+  "geopolitics": {
+    "description": "international affairs, intelligence, conflict analysis",
+    "subcategories": {
+      "analysis": [
+        "https://warontherocks.com/feed/",
+        "https://www.lawfaremedia.org/rss.xml",
+        "https://thecipherbrief.com/feed"
+      ],
+      "investigation": [
+        "https://theintercept.com/feed/?lang=en",
+        "https://www.bellingcat.com/feed/",
+        "https://nsarchive.gwu.edu/feed"
+      ],
+      "news": [
+        "https://www.aljazeera.com/xml/rss/all.xml",
+        "https://consortiumnews.com/feed/",
+        "https://www.counterpunch.org/feed/"
+      ],
+      "intelligence": [
+        "https://www.cia.gov/resources/csi/rss/"
+      ]
+    }
+  },
+  "finance": {
+    "description": "economic data, government filings, monetary policy",
+    "subcategories": {
+      "economic_data": [
+        "https://fred.stlouisfed.org/feed/",
+        "https://www.bls.gov/feed/bls_latest.rss"
+      ],
+      "filings": [
+        "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&type=8-K&dateb=&owner=include&count=40&search_text=&action=getcompany&RSS=1"
+      ],
+      "treasury": [
+        "https://home.treasury.gov/system/files/276/yield-curve-rates-rss.xml"
+      ],
+      "monetary_policy": [
+        "https://www.federalreserve.gov/feeds/press_all.xml"
+      ]
+    }
+  },
+  "technology": {
+    "description": "tech news, networking, programming",
+    "subcategories": {
+      "general": [
+        "https://news.ycombinator.com/rss"
+      ],
+      "networking": [
+        "https://packetpushers.net/feed/",
+        "https://blogs.cisco.com/networking/feed",
+        "https://networkingnerd.net/feed/",
+        "https://blog.ipspace.net/feed/"
+      ],
+      "python": [
+        "https://realpython.com/atom.xml",
+        "https://automatetheboringstuff.com/blog/feed",
+        "https://planet.python.org/rss20.xml"
+      ],
+      "cs_research": [
+        "https://cacm.acm.org/feed/",
+        "https://blog.acolyer.org/feed/",
+        "https://dl.acm.org/action/showFeed?type=etoc&feed=rss&jc=csur"
+      ]
+    }
+  },
+  "philosophy": {
+    "description": "stoicism, philosophy, esoterica",
+    "subcategories": {
+      "philosophy": [
+        "https://dailystoic.com/feed/",
+        "https://www.philosophybites.com/atom.xml"
+      ],
+      "history": [
+        "https://feeds.feedburner.com/dancarlin/history?format=xml",
+        "https://dchhaddendum.libsyn.com/rss"
+      ],
+      "esoterica": [
+        "https://www.astro.com/blog/en/feed/",
+        "https://theastrologypodcast.com/feed/",
+        "https://feeds.feedburner.com/RealitySandwich",
+        "https://www.gaia.com/blog/feed",
+        "https://lonerwolf.com/feed/",
+        "https://www.thehermeticpenetrator.com/feed",
+        "https://hermetic.com/rss.xml",
+        "https://ultraculture.org/feed/"
+      ]
+    }
+  },
+  "research": {
+    "description": "academic papers, preprints, working papers",
+    "subcategories": {
+      "ai_ml": [
+        "http://export.arxiv.org/rss/cs.AI",
+        "http://export.arxiv.org/rss/cs.LG",
+        "http://export.arxiv.org/rss/cs.CL",
+        "http://export.arxiv.org/rss/stat.ML"
+      ],
+      "security_research": [
+        "http://export.arxiv.org/rss/cs.CR"
+      ],
+      "quantitative_finance": [
+        "http://export.arxiv.org/rss/q-fin.ST",
+        "http://export.arxiv.org/rss/q-fin.PM",
+        "http://export.arxiv.org/rss/q-fin.RM"
+      ],
+      "economics": [
+        "https://www.nber.org/rss/new.xml",
+        "https://www.nber.org/rss/papers.xml"
+      ],
+      "multidisciplinary": [
+        "https://papers.ssrn.com/sol3/Jeljour_results.cfm?form_name=journalBrowse&journal_id=556&Network=no&lim=false&npage=1&SortOrder=ab_approval_date&stype=desc&output=rss",
+        "https://papers.ssrn.com/sol3/Jeljour_results.cfm?form_name=journalBrowse&journal_id=1709&Network=no&lim=false&npage=1&SortOrder=ab_approval_date&stype=desc&output=rss"
+      ]
+    }
+  }
+}

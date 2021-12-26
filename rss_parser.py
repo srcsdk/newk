@@ -3,7 +3,6 @@
 
 import json
 import xml.etree.ElementTree as ET
-from datetime import datetime
 
 
 def parse_rss1(raw_bytes, source_url):

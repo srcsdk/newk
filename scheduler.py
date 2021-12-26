@@ -72,7 +72,7 @@ def run_scheduler(interval=None):
     try:
         while True:
             if needs_refresh(schedule):
-                count = run_refresh()
+                run_refresh()
                 schedule["last_run"] = datetime.now().isoformat()
                 save_schedule(schedule)
             else:

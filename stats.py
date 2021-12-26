@@ -3,7 +3,6 @@
 
 import json
 import time
-from collections import Counter, defaultdict
 from pathlib import Path
 
 STATS_DIR = Path.home() / ".config" / "newk"

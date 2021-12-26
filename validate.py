@@ -2,7 +2,6 @@
 """validate feed urls and check for dead links"""
 
 import os
-import sys
 import time
 from urllib.request import urlopen, Request
 from urllib.error import URLError
@@ -20,7 +19,7 @@ def load_feeds(filename):
         return []
     with open(filename, "r") as f:
         lines = f.read().strip().split("\n")
-    return [l.strip() for l in lines if l.strip() and not l.startswith("#")]
+    return [line.strip() for line in lines if line.strip() and not line.startswith("#")]
 
 
 def check_feed(url, timeout=10):

@@ -2,7 +2,6 @@
 """keyword alerts for new articles matching user-defined terms"""
 
 import json
-import re
 import time
 from pathlib import Path
 

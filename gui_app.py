@@ -1,22 +1,22 @@
 #!/usr/bin/env python3
 """tab-based feed reader gui with personalized recommendations"""
 
-import json
 import os
 import sys
-import threading
-import tkinter as tk
-from tkinter import ttk, messagebox
-from datetime import datetime
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
-from scrape import load_cache, scrape_all, save_cache, load_categories
-from preview import generate_preview, strip_html
-from preferences import (
-    load_preferences, save_preferences, add_interest, remove_interest,
+import threading  # noqa: E402
+import tkinter as tk  # noqa: E402
+from tkinter import ttk  # noqa: E402
+from datetime import datetime  # noqa: E402
+
+from scrape import load_cache, scrape_all, save_cache, load_categories  # noqa: E402
+from preview import generate_preview, strip_html  # noqa: E402
+from preferences import (  # noqa: E402
+    load_preferences, add_interest, remove_interest,
     pin_category, unpin_category, mark_read, is_read,
-    score_relevance, rank_by_relevance,
+    rank_by_relevance,
 )
 
 DARK_BG = "#1e1e1e"
@@ -405,8 +405,8 @@ class FeedApp(tk.Tk):
                 self.after(0, lambda: self.status_var.set(
                     f"{len(items)} items loaded at {datetime.now().strftime('%H:%M')}"
                 ))
-            except Exception as e:
-                self.after(0, lambda: self.status_var.set(f"refresh error: {e}"))
+            except Exception as err:
+                self.after(0, lambda msg=str(err): self.status_var.set(f"refresh error: {msg}"))
 
         thread = threading.Thread(target=worker, daemon=True)
         thread.start()

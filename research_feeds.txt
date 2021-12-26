@@ -1,0 +1,14 @@
+http://export.arxiv.org/rss/cs.AI
+http://export.arxiv.org/rss/cs.LG
+http://export.arxiv.org/rss/cs.CR
+http://export.arxiv.org/rss/cs.CL
+http://export.arxiv.org/rss/q-fin.ST
+http://export.arxiv.org/rss/q-fin.PM
+http://export.arxiv.org/rss/q-fin.RM
+http://export.arxiv.org/rss/stat.ML
+https://pubmed.ncbi.nlm.nih.gov/rss/search/1f0fWJCr9DsLSevKsauYpjGMF5appugnQDqjD2v0jXRQ7TLNBZ/?limit=15&utm_campaign=pubmed-2&fc=20220101000000
+https://pubmed.ncbi.nlm.nih.gov/rss/search/1jHBs8PkK3LdZD7h09Y3eKq1oP4cG6Q5vS4xPzaB0RU9hXQW0J/?limit=15&utm_campaign=pubmed-2&fc=20220101000000
+https://papers.ssrn.com/sol3/Jeljour_results.cfm?form_name=journalBrowse&journal_id=556&Network=no&lim=false&npage=1&SortOrder=ab_approval_date&stype=desc&output=rss
+https://papers.ssrn.com/sol3/Jeljour_results.cfm?form_name=journalBrowse&journal_id=1709&Network=no&lim=false&npage=1&SortOrder=ab_approval_date&stype=desc&output=rss
+https://www.nber.org/rss/new.xml
+https://www.nber.org/rss/papers.xml

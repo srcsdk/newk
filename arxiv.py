@@ -43,10 +43,6 @@ def parse_arxiv_rss(data, category):
     except ET.ParseError:
         return []
 
-    ns = {"rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
-          "rss": "http://purl.org/rss/1.0/",
-          "dc": "http://purl.org/dc/elements/1.1/"}
-
     articles = []
     for item in root.findall(".//item"):
         if item is None:

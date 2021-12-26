@@ -46,3 +46,9 @@ https://aws.amazon.com/blogs/security/feed/
 https://cacm.acm.org/feed/
 https://blog.acolyer.org/feed/
 https://dl.acm.org/action/showFeed?type=etoc&feed=rss&jc=csur
+https://fred.stlouisfed.org/feed/
+https://efts.sec.gov/LATEST/search-index?q=%22form-type%22&dateRange=custom&startdt=2024-01-01&enddt=2026-12-31&forms=10-K,10-Q,8-K
+https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&type=8-K&dateb=&owner=include&count=40&search_text=&action=getcompany&RSS=1
+https://home.treasury.gov/system/files/276/yield-curve-rates-rss.xml
+https://www.bls.gov/feed/bls_latest.rss
+https://www.federalreserve.gov/feeds/press_all.xml
