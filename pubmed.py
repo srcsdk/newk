@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 """pubmed feed parser for health research tracking"""
 
-import re
 import xml.etree.ElementTree as ET
 from urllib.request import urlopen, Request
 

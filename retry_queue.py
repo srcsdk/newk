@@ -28,7 +28,7 @@ def add_to_queue(url, max_retries=5):
     state = load_state()
     if url not in state:
         state[url] = {"retries": 0, "max_retries": max_retries,
-                       "last_attempt": 0, "status": "pending"}
+                      "last_attempt": 0, "status": "pending"}
     state[url]["retries"] += 1
     state[url]["last_attempt"] = time.time()
     if state[url]["retries"] >= max_retries:
