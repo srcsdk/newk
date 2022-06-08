@@ -1,90 +1,94 @@
 #!/usr/bin/env python3
-"""content recommendation based on reading history"""
+"""feed recommendation engine based on reading history"""
 
-from collections import defaultdict
-
-
-def build_profile(history, decay=0.95):
-    """build user interest profile from reading history.
-
-    more recent reads are weighted higher.
-    """
-    scores = defaultdict(float)
-    weight = 1.0
-    for item in reversed(history):
-        for tag in item.get("tags", []):
-            scores[tag] += weight
-        category = item.get("category", "")
-        if category:
-            scores[category] += weight * 1.5
-        weight *= decay
-    total = sum(scores.values()) or 1
-    return {k: round(v / total, 4) for k, v in scores.items()}
+import json
+import os
+import math
+from collections import Counter
 
 
-def score_article(article, profile):
-    """score an article against user profile."""
-    score = 0
-    for tag in article.get("tags", []):
-        score += profile.get(tag, 0)
-    category = article.get("category", "")
-    if category:
-        score += profile.get(category, 0) * 2
-    quality = article.get("quality_score", 0.5)
-    score *= (0.5 + quality)
-    return round(score, 4)
+class Recommender:
+    """recommend feeds based on user reading patterns."""
 
+    def __init__(self, data_dir=None):
+        if data_dir is None:
+            data_dir = os.path.expanduser("~/.newk")
+        self.data_dir = data_dir
+        self.history_file = os.path.join(data_dir, "read_history.json")
+        os.makedirs(data_dir, exist_ok=True)
+        self.history = self._load()
 
-def recommend(articles, profile, n=10, seen=None):
-    """return top n recommended articles."""
-    if seen is None:
-        seen = set()
-    candidates = [a for a in articles if a.get("id") not in seen]
-    scored = [(a, score_article(a, profile)) for a in candidates]
-    scored.sort(key=lambda x: x[1], reverse=True)
-    return [a for a, s in scored[:n]]
+    def _load(self):
+        if os.path.isfile(self.history_file):
+            with open(self.history_file) as f:
+                return json.load(f)
+        return {"reads": [], "likes": [], "topics": {}}
 
+    def _save(self):
+        with open(self.history_file, "w") as f:
+            json.dump(self.history, f, indent=2)
 
-def diversity_boost(recommendations, max_per_category=3):
-    """limit articles per category to increase diversity."""
-    counts = defaultdict(int)
-    diverse = []
-    for article in recommendations:
-        cat = article.get("category", "other")
-        if counts[cat] < max_per_category:
-            diverse.append(article)
-            counts[cat] += 1
-    return diverse
+    def record_read(self, article):
+        """record that user read an article."""
+        self.history["reads"].append({
+            "title": article.get("title", ""),
+            "source": article.get("source", ""),
+            "category": article.get("category", ""),
+        })
+        cat = article.get("category", "general")
+        self.history["topics"][cat] = self.history["topics"].get(cat, 0) + 1
+        if len(self.history["reads"]) > 500:
+            self.history["reads"] = self.history["reads"][-500:]
+        self._save()
 
+    def record_like(self, article):
+        """record that user liked an article."""
+        self.history["likes"].append({
+            "title": article.get("title", ""),
+            "source": article.get("source", ""),
+            "category": article.get("category", ""),
+        })
+        self._save()
 
-def cold_start_recommendations(articles, n=10):
-    """recommendations for new users based on popularity."""
-    sorted_articles = sorted(
-        articles,
-        key=lambda a: a.get("popularity", 0),
-        reverse=True,
-    )
-    return sorted_articles[:n]
+    def score_article(self, article):
+        """score how relevant an article is to user interests."""
+        score = 0
+        cat = article.get("category", "")
+        topic_counts = self.history.get("topics", {})
+        total_reads = sum(topic_counts.values()) or 1
+        if cat in topic_counts:
+            score += topic_counts[cat] / total_reads * 50
+        source = article.get("source", "")
+        source_reads = sum(
+            1 for r in self.history.get("reads", [])
+            if r.get("source") == source
+        )
+        score += min(source_reads * 5, 30)
+        liked_sources = Counter(
+            r.get("source", "") for r in self.history.get("likes", [])
+        )
+        if source in liked_sources:
+            score += liked_sources[source] * 10
+        return min(score, 100)
+
+    def rank_articles(self, articles):
+        """rank articles by relevance score."""
+        scored = [(self.score_article(a), a) for a in articles]
+        scored.sort(key=lambda x: x[0], reverse=True)
+        return scored
+
+    def top_topics(self, n=5):
+        """get user's top topics."""
+        topics = self.history.get("topics", {})
+        sorted_topics = sorted(topics.items(), key=lambda x: x[1], reverse=True)
+        return sorted_topics[:n]
 
 
 if __name__ == "__main__":
-    history = [
-        {"tags": ["python", "tutorial"], "category": "programming"},
-        {"tags": ["linux", "security"], "category": "technology"},
-        {"tags": ["python", "data"], "category": "programming"},
-    ]
-    profile = build_profile(history)
-    print("user profile:")
-    for k, v in sorted(profile.items(), key=lambda x: x[1], reverse=True):
-        print(f"  {k}: {v}")
-    articles = [
-        {"id": 1, "tags": ["python", "web"], "category": "programming",
-         "quality_score": 0.8},
-        {"id": 2, "tags": ["sports"], "category": "entertainment",
-         "quality_score": 0.9},
-        {"id": 3, "tags": ["linux", "kernel"], "category": "technology",
-         "quality_score": 0.7},
-    ]
-    recs = recommend(articles, profile, n=3)
-    for r in recs:
-        print(f"  recommended: {r['tags']}")
+    rec = Recommender("/tmp/newk_rec")
+    rec.record_read({"title": "python tips", "category": "programming", "source": "dev.to"})
+    rec.record_read({"title": "rust guide", "category": "programming", "source": "rust-lang.org"})
+    rec.record_read({"title": "ai news", "category": "technology", "source": "arxiv.org"})
+    print(f"top topics: {rec.top_topics()}")
+    test = {"title": "new python release", "category": "programming", "source": "dev.to"}
+    print(f"score for python article: {rec.score_article(test)}")
