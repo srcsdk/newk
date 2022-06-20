@@ -1,84 +1,107 @@
 #!/usr/bin/env python3
-"""reading list export to markdown and html formats"""
+"""reading list management for saved articles"""
 
 import json
 import os
-from datetime import datetime
+import time
 
 
-READING_LIST_FILE = os.path.join(os.path.dirname(__file__), "reading_list.json")
+class ReadingList:
+    """manage saved articles for later reading."""
 
+    def __init__(self, filepath="reading_list.json"):
+        self.filepath = filepath
+        self.items = self._load()
 
-def load_reading_list():
-    """load saved reading list."""
-    if os.path.exists(READING_LIST_FILE):
-        with open(READING_LIST_FILE, "r") as f:
-            return json.load(f)
-    return []
+    def save_article(self, article, tags=None):
+        """save an article to the reading list."""
+        item = {
+            "title": article.get("title", ""),
+            "url": article.get("url", ""),
+            "source": article.get("source", ""),
+            "tags": tags or [],
+            "saved_at": time.time(),
+            "read": False,
+            "notes": "",
+        }
+        self.items.append(item)
+        self._save()
+        return item
 
+    def mark_read(self, index):
+        """mark an article as read."""
+        if 0 <= index < len(self.items):
+            self.items[index]["read"] = True
+            self.items[index]["read_at"] = time.time()
+            self._save()
+            return True
+        return False
 
-def save_reading_list(items):
-    """save reading list."""
-    with open(READING_LIST_FILE, "w") as f:
-        json.dump(items, f, indent=2)
+    def add_note(self, index, note):
+        """add a note to a saved article."""
+        if 0 <= index < len(self.items):
+            self.items[index]["notes"] = note
+            self._save()
+            return True
+        return False
 
+    def unread(self):
+        """get unread articles."""
+        return [i for i in self.items if not i.get("read")]
 
-def add_to_list(title, url, category="uncategorized", notes=""):
-    """add article to reading list."""
-    items = load_reading_list()
-    items.append({
-        "title": title,
-        "url": url,
-        "category": category,
-        "notes": notes,
-        "added": datetime.now().isoformat(),
-        "read": False,
-    })
-    save_reading_list(items)
+    def by_tag(self, tag):
+        """filter articles by tag."""
+        return [i for i in self.items if tag in i.get("tags", [])]
 
+    def search(self, query):
+        """search reading list by title."""
+        query_lower = query.lower()
+        return [
+            i for i in self.items
+            if query_lower in i.get("title", "").lower()
+        ]
 
-def export_markdown(items=None):
-    """export reading list as markdown."""
-    if items is None:
-        items = load_reading_list()
-    by_category = {}
-    for item in items:
-        cat = item.get("category", "uncategorized")
-        by_category.setdefault(cat, []).append(item)
-    lines = ["# reading list", ""]
-    for category in sorted(by_category.keys()):
-        lines.append(f"## {category}")
-        lines.append("")
-        for item in by_category[category]:
-            status = "x" if item.get("read") else " "
-            lines.append(f"- [{status}] [{item['title']}]({item['url']})")
-            if item.get("notes"):
-                lines.append(f"  - {item['notes']}")
-        lines.append("")
-    return "\n".join(lines)
+    def remove(self, index):
+        """remove an article from the list."""
+        if 0 <= index < len(self.items):
+            removed = self.items.pop(index)
+            self._save()
+            return removed
+        return None
 
+    def stats(self):
+        """reading list statistics."""
+        total = len(self.items)
+        read = sum(1 for i in self.items if i.get("read"))
+        return {
+            "total": total,
+            "read": read,
+            "unread": total - read,
+        }
 
-def export_html(items=None):
-    """export reading list as html."""
-    if items is None:
-        items = load_reading_list()
-    by_category = {}
-    for item in items:
-        cat = item.get("category", "uncategorized")
-        by_category.setdefault(cat, []).append(item)
-    parts = ["<html><head><title>reading list</title></head><body>"]
-    parts.append("<h1>reading list</h1>")
-    for category in sorted(by_category.keys()):
-        parts.append(f"<h2>{category}</h2><ul>")
-        for item in by_category[category]:
-            parts.append(f'<li><a href="{item["url"]}">{item["title"]}</a></li>')
-        parts.append("</ul>")
-    parts.append("</body></html>")
-    return "\n".join(parts)
+    def _load(self):
+        if os.path.isfile(self.filepath):
+            with open(self.filepath) as f:
+                return json.load(f)
+        return []
+
+    def _save(self):
+        with open(self.filepath, "w") as f:
+            json.dump(self.items, f, indent=2)
 
 
 if __name__ == "__main__":
-    items = load_reading_list()
-    print(f"reading list: {len(items)} items")
-    md = export_markdown(items)
-    print(md[:500] if md else "empty")
+    rl = ReadingList("/tmp/test_reading.json")
+    rl.save_article(
+        {"title": "python 3.11 features", "url": "example.com/py311"},
+        tags=["python"],
+    )
+    rl.save_article(
+        {"title": "linux kernel internals", "url": "example.com/kernel"},
+        tags=["linux"],
+    )
+    stats = rl.stats()
+    print(f"reading list: {stats}")
+    unread = rl.unread()
+    for item in unread:
+        print(f"  {item['title']}")
