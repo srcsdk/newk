@@ -1,175 +1,108 @@
 #!/usr/bin/env python3
-"""extended rss parser supporting rss 1.0, rdf, and json feed formats"""
+"""rss and atom feed parsing"""
 
-import json
+import re
 import xml.etree.ElementTree as ET
 
 
-def parse_rss1(raw_bytes, source_url):
-    """parse rss 1.0 / rdf feed format"""
-    if raw_bytes is None:
-        return []
-
+def parse_rss(xml_content):
+    """parse rss 2.0 feed content."""
     try:
-        root = ET.fromstring(raw_bytes)
+        root = ET.fromstring(xml_content)
     except ET.ParseError:
-        return []
-
+        return {"title": "", "items": []}
+    channel = root.find("channel")
+    if channel is None:
+        return {"title": "", "items": []}
+    title = _text(channel, "title")
     items = []
-    ns = {"rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
-          "rss": "http://purl.org/rss/1.0/",
-          "dc": "http://purl.org/dc/elements/1.1/"}
-
-    for item in root.findall(".//rss:item", ns):
-        title_el = item.find("rss:title", ns)
-        link_el = item.find("rss:link", ns)
-        desc_el = item.find("rss:description", ns)
-        date_el = item.find("dc:date", ns)
-
-        title = title_el.text.strip() if title_el is not None and title_el.text else ""
-        link = link_el.text.strip() if link_el is not None and link_el.text else ""
-        desc = desc_el.text.strip() if desc_el is not None and desc_el.text else ""
-        date = date_el.text.strip() if date_el is not None and date_el.text else ""
-
-        if title:
-            items.append({
-                "title": title,
-                "link": link,
-                "date": date[:19],
-                "description": desc[:500],
-                "source": source_url,
-                "format": "rss1",
-            })
-
-    return items
+    for item in channel.findall("item"):
+        entry = {
+            "title": _text(item, "title"),
+            "link": _text(item, "link"),
+            "description": _clean_html(_text(item, "description")),
+            "pub_date": _text(item, "pubDate"),
+            "guid": _text(item, "guid"),
+        }
+        items.append(entry)
+    return {"title": title, "items": items}
 
 
-def parse_json_feed(raw_bytes, source_url):
-    """parse json feed format (jsonfeed.org spec)"""
-    if raw_bytes is None:
-        return []
-
+def parse_atom(xml_content):
+    """parse atom feed content."""
+    ns = {"atom": "http://www.w3.org/2005/Atom"}
     try:
-        data = json.loads(raw_bytes)
-    except (json.JSONDecodeError, ValueError):
-        return []
-
+        root = ET.fromstring(xml_content)
+    except ET.ParseError:
+        return {"title": "", "items": []}
+    title_el = root.find("atom:title", ns)
+    title = title_el.text if title_el is not None else ""
     items = []
-    for entry in data.get("items", []):
-        title = entry.get("title", "")
-        url = entry.get("url", entry.get("external_url", ""))
-        date = entry.get("date_published", "")
-        summary = entry.get("summary", entry.get("content_text", ""))
-
-        if title:
-            items.append({
-                "title": title,
-                "link": url,
-                "date": date[:19] if date else "",
-                "description": (summary or "")[:500],
-                "source": source_url,
-                "format": "json_feed",
-            })
-
-    return items
+    for entry in root.findall("atom:entry", ns):
+        link_el = entry.find("atom:link", ns)
+        link = link_el.get("href", "") if link_el is not None else ""
+        title_el = entry.find("atom:title", ns)
+        summary_el = entry.find("atom:summary", ns)
+        updated_el = entry.find("atom:updated", ns)
+        items.append({
+            "title": title_el.text if title_el is not None else "",
+            "link": link,
+            "description": summary_el.text if summary_el is not None else "",
+            "pub_date": updated_el.text if updated_el is not None else "",
+        })
+    return {"title": title, "items": items}
 
 
-def detect_format(raw_bytes):
-    """detect feed format from content"""
-    if raw_bytes is None:
-        return "unknown"
-
-    content = raw_bytes[:500].decode("utf-8", errors="replace").strip()
-
-    if content.startswith("{"):
-        return "json_feed"
-    if "rdf:RDF" in content or "xmlns=\"http://purl.org/rss/1.0/\"" in content:
-        return "rss1"
-    if "<rss" in content:
-        return "rss2"
-    if "<feed" in content and "xmlns=\"http://www.w3.org/2005/Atom\"" in content:
+def detect_feed_type(xml_content):
+    """detect whether content is rss or atom."""
+    if "<rss" in xml_content[:500]:
+        return "rss"
+    elif "http://www.w3.org/2005/Atom" in xml_content[:500]:
         return "atom"
     return "unknown"
 
 
-def estimate_read_time(text, wpm=200):
-    """estimate reading time in minutes from article text.
-
-    splits text on whitespace and divides by words per minute.
-    returns a float rounded to 1 decimal place, minimum 0.1.
-    """
-    if not text or not text.strip():
-        return 0.0
-    word_count = len(text.split())
-    minutes = word_count / max(wpm, 1)
-    return max(0.1, round(minutes, 1))
+def parse_feed(xml_content):
+    """auto-detect and parse feed."""
+    feed_type = detect_feed_type(xml_content)
+    if feed_type == "rss":
+        return parse_rss(xml_content)
+    elif feed_type == "atom":
+        return parse_atom(xml_content)
+    return {"title": "", "items": []}
 
 
-def parse_atom(xml_text, source_url=""):
-    """parse atom feed format (entry/title/link/updated elements).
-
-    handles the atom namespace and extracts entries with
-    title, link href, updated date, and summary content.
-    """
-    if xml_text is None:
-        return []
-
-    if isinstance(xml_text, str):
-        xml_text = xml_text.encode("utf-8")
-
-    try:
-        root = ET.fromstring(xml_text)
-    except ET.ParseError:
-        return []
-
-    ns = {"atom": "http://www.w3.org/2005/Atom"}
-    items = []
-
-    for entry in root.findall(".//atom:entry", ns):
-        title_el = entry.find("atom:title", ns)
-        link_el = entry.find("atom:link", ns)
-        updated_el = entry.find("atom:updated", ns)
-        summary_el = entry.find("atom:summary", ns)
-        content_el = entry.find("atom:content", ns)
-
-        title = ""
-        if title_el is not None and title_el.text:
-            title = title_el.text.strip()
-
-        link = ""
-        if link_el is not None:
-            link = link_el.get("href", "")
-
-        updated = ""
-        if updated_el is not None and updated_el.text:
-            updated = updated_el.text.strip()
-
-        summary = ""
-        if summary_el is not None and summary_el.text:
-            summary = summary_el.text.strip()
-        elif content_el is not None and content_el.text:
-            summary = content_el.text.strip()
-
-        if title:
-            items.append({
-                "title": title,
-                "link": link,
-                "date": updated[:19],
-                "description": summary[:500],
-                "source": source_url,
-                "format": "atom",
-            })
-
-    return items
+def _text(element, tag):
+    """safely get text from xml element."""
+    child = element.find(tag)
+    if child is not None and child.text:
+        return child.text.strip()
+    return ""
 
 
-def parse_auto(raw_bytes, source_url):
-    """auto-detect format and parse accordingly"""
-    fmt = detect_format(raw_bytes)
-    if fmt == "json_feed":
-        return parse_json_feed(raw_bytes, source_url)
-    elif fmt == "rss1":
-        return parse_rss1(raw_bytes, source_url)
-    elif fmt == "atom":
-        return parse_atom(raw_bytes, source_url)
-    return []
+def _clean_html(text):
+    """remove html tags from text."""
+    return re.sub(r"<[^>]+>", "", text).strip()
+
+
+if __name__ == "__main__":
+    sample_rss = """<?xml version="1.0"?>
+    <rss version="2.0">
+    <channel>
+    <title>test feed</title>
+    <item>
+      <title>article one</title>
+      <link>https://example.com/1</link>
+      <description>first article content</description>
+    </item>
+    <item>
+      <title>article two</title>
+      <link>https://example.com/2</link>
+      <description>second article content</description>
+    </item>
+    </channel>
+    </rss>"""
+    result = parse_feed(sample_rss)
+    print(f"feed: {result['title']}")
+    for item in result["items"]:
+        print(f"  {item['title']}: {item['link']}")
