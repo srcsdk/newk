@@ -2,7 +2,6 @@
 """quality filtering for research and data feeds"""
 
 import re
-from collections import Counter
 
 
 class QualityFilter:
