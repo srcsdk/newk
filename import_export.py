@@ -3,7 +3,6 @@
 
 import json
 import xml.etree.ElementTree as ET
-import os
 
 
 def export_opml(feeds, output_path):

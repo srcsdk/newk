@@ -2,7 +2,6 @@
 """extractive text summarization for articles"""
 
 import re
-import math
 from collections import Counter
 
 

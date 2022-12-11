@@ -16,7 +16,7 @@ def discover_feeds(url):
         return []
     feeds = []
     link_pattern = re.compile(
-        r'<link[^>]+type=["']application/(rss|atom)\+xml["'][^>]*>',
+        r"<link[^>]+type=[\"']application/(rss|atom)\+xml[\"'][^>]*>",
         re.IGNORECASE,
     )
     for match in link_pattern.finditer(html):
@@ -44,7 +44,7 @@ def discover_feeds(url):
 
 def _extract_attr(tag, attr):
     """extract attribute value from html tag."""
-    pattern = re.compile(f'{attr}=["']([^"']+)["']', re.IGNORECASE)
+    pattern = re.compile(attr + r'=["\x27]([^"\x27]+)["\x27]', re.IGNORECASE)
     match = pattern.search(tag)
     return match.group(1) if match else ""
 
