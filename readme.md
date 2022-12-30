@@ -26,5 +26,3 @@ content = scrape_article("https://example.com/article")
 from quality import score
 rating = score(content)
 ```
-
-https://github.com/srcsdk/newk
